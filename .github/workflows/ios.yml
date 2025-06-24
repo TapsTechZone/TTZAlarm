@@ -13,16 +13,17 @@ jobs:
       - name: Install dependencies
         run: |
           brew install python3
-          pip3 install --upgrade pip
-          pip3 install Cython
-          pip3 install kivy
-          pip3 install ffpyplayer
-          pip3 install kivy-ios
+      - name: Set up Python venv
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install --upgrade pip
+          pip install Cython kivy ffpyplayer kivy-ios
       - name: Build Kivy-iOS project
         run: |
-          python3 -m pip install --user kivy-ios
-          python3 -m kivy_ios.toolchain create ttzalarm main.py --requirements=kivy,ffpyplayer
-          python3 -m kivy_ios.toolchain build kivy ffpyplayer
+          source venv/bin/activate
+          python -m kivy_ios.toolchain create ttzalarm main.py --requirements=kivy,ffpyplayer
+          python -m kivy_ios.toolchain build kivy ffpyplayer
       - name: Archive Xcode project
         run: |
           tar czf TTZAlarmiOS-xcode-project.tar.gz ttzalarm-ios

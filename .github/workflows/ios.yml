@@ -22,8 +22,9 @@ jobs:
       - name: Build Kivy-iOS project
         run: |
           source venv/bin/activate
-          python -m kivy_ios.toolchain create ttzalarm main.py
+          python -m kivy_ios.toolchain build python3
           python -m kivy_ios.toolchain build kivy ffpyplayer
+          python -m kivy_ios.toolchain create ttzalarm main.py
       - name: Archive Xcode project
         run: |
           cp alarm.flac ttzalarm-ios/

@@ -63,6 +63,7 @@ jobs:
         run: |
           pip install kivy ffpyplayer pyinstaller
       - name: Build with PyInstaller
+        timeout-minutes: 10
         run: |
           pyinstaller --onefile main.py --name TTZAlarmWin.exe
           mkdir dist_windows

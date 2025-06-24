@@ -1,0 +1,28 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build APK with Buildozer
+        uses: docker://kivy/buildozer:latest
+        with:
+          args: buildozer android debug
+      - name: Copy APK to artifact
+        run: |
+          mkdir -p dist_apk
+          cp bin/*.apk dist_apk/ || cp ./app/bin/*.apk dist_apk/ || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-apk
+          path: dist_apk/

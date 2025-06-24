@@ -1,0 +1,32 @@
+name: Build iOS Xcode Project
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          brew install python3
+          pip3 install --upgrade pip
+          pip3 install Cython
+          pip3 install kivy
+          pip3 install ffpyplayer
+          pip3 install kivy-ios
+      - name: Build Kivy-iOS project
+        run: |
+          python3 -m pip install --user kivy-ios
+          python3 -m kivy_ios.toolchain create ttzalarm main.py --requirements=kivy,ffpyplayer
+          python3 -m kivy_ios.toolchain build kivy ffpyplayer
+      - name: Archive Xcode project
+        run: |
+          tar czf ttzalarm-ios-xcode-project.tar.gz ttzalarm-ios
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ios-xcode-project
+          path: ttzalarm-ios-xcode-project.tar.gz

@@ -1,0 +1,73 @@
+name: Build Desktop Apps
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg libsdl2-dev libsdl2-mixer-dev
+          pip install kivy ffpyplayer pyinstaller
+      - name: Build with PyInstaller
+        run: |
+          pyinstaller --onefile main.py --name TTZAlarm
+          mkdir -p dist_linux
+          cp dist/TTZAlarm dist_linux/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-app
+          path: dist_linux/
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          brew install ffmpeg sdl2 sdl2_mixer
+          pip install kivy ffpyplayer pyinstaller
+      - name: Build with PyInstaller
+        run: |
+          pyinstaller --onefile main.py --name TTZAlarm
+          mkdir -p dist_macos
+          cp dist/TTZAlarm dist_macos/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos-app
+          path: dist_macos/
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          pip install kivy ffpyplayer pyinstaller
+      - name: Build with PyInstaller
+        run: |
+          pyinstaller --onefile main.py --name TTZAlarm.exe
+          mkdir dist_windows
+          copy dist\TTZAlarm.exe dist_windows\
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-app
+          path: dist_windows/

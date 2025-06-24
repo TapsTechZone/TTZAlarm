@@ -21,7 +21,7 @@ jobs:
           pip install kivy ffpyplayer pyinstaller
       - name: Build with PyInstaller
         run: |
-          pyinstaller --onefile main.py --name TTZAlarmLinux
+          pyinstaller --onefile main.py --name TTZAlarmLinux --add-data "alarm.flac:."
           mkdir -p dist_linux
           cp dist/TTZAlarmLinux dist_linux/
       - uses: actions/upload-artifact@v4
@@ -43,7 +43,7 @@ jobs:
           pip install kivy ffpyplayer pyinstaller
       - name: Build with PyInstaller
         run: |
-          pyinstaller --onefile main.py --name TTZAlarmMac
+          pyinstaller --onefile main.py --name TTZAlarmMac --add-data "alarm.flac:."
           mkdir -p dist_macos
           cp dist/TTZAlarmMac dist_macos/
       - uses: actions/upload-artifact@v4
@@ -65,7 +65,7 @@ jobs:
       - name: Build with PyInstaller
         timeout-minutes: 10
         run: |
-          pyinstaller --onefile main.py --name TTZAlarmWin.exe
+          pyinstaller --onefile main.py --name TTZAlarmWin.exe --add-data "alarm.flac;."
           mkdir dist_windows
           copy dist\TTZAlarmWin.exe dist_windows\
       - uses: actions/upload-artifact@v4

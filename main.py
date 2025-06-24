@@ -40,7 +40,7 @@ class AlarmApp(App):
     #sets volume to max and plays alarm sound
     def play_generic_alarm(self):
         from kivy.core.audio import SoundLoader
-        sound = SoundLoader.load('alarm.mp3')
+        sound = SoundLoader.load('alarm.flac')
         if sound:
             sound.volume = 1.0
             sound.play()

@@ -25,8 +25,8 @@ jobs:
           python3 -m kivy_ios.toolchain build kivy ffpyplayer
       - name: Archive Xcode project
         run: |
-          tar czf ttzalarm-ios-xcode-project.tar.gz ttzalarm-ios
+          tar czf TTZAlarmiOS-xcode-project.tar.gz ttzalarm-ios
       - uses: actions/upload-artifact@v4
         with:
           name: ios-xcode-project
-          path: ttzalarm-ios-xcode-project.tar.gz
+          path: TTZAlarmiOS-xcode-project.tar.gz

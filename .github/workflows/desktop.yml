@@ -21,9 +21,9 @@ jobs:
           pip install kivy ffpyplayer pyinstaller
       - name: Build with PyInstaller
         run: |
-          pyinstaller --onefile main.py --name TTZAlarm
+          pyinstaller --onefile main.py --name TTZAlarmLinux
           mkdir -p dist_linux
-          cp dist/TTZAlarm dist_linux/
+          cp dist/TTZAlarmLinux dist_linux/
       - uses: actions/upload-artifact@v4
         with:
           name: linux-app
@@ -43,9 +43,9 @@ jobs:
           pip install kivy ffpyplayer pyinstaller
       - name: Build with PyInstaller
         run: |
-          pyinstaller --onefile main.py --name TTZAlarm
+          pyinstaller --onefile main.py --name TTZAlarmMac
           mkdir -p dist_macos
-          cp dist/TTZAlarm dist_macos/
+          cp dist/TTZAlarmMac dist_macos/
       - uses: actions/upload-artifact@v4
         with:
           name: macos-app
@@ -64,9 +64,9 @@ jobs:
           pip install kivy ffpyplayer pyinstaller
       - name: Build with PyInstaller
         run: |
-          pyinstaller --onefile main.py --name TTZAlarm.exe
+          pyinstaller --onefile main.py --name TTZAlarmWin.exe
           mkdir dist_windows
-          copy dist\TTZAlarm.exe dist_windows\
+          copy dist\TTZAlarmWin.exe dist_windows\
       - uses: actions/upload-artifact@v4
         with:
           name: windows-app

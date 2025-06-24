@@ -10,14 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      - name: Build APK with Buildozer
-        uses: docker://kivy/buildozer:latest
+      - name: Build APK with Buildozer Action
+        uses: kivy/buildozer-action@v1
         with:
-          args: buildozer android debug
+          command: buildozer android debug
       - name: Copy APK to artifact
         run: |
           mkdir -p dist_apk

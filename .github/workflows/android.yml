@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      # Optional: Uncomment this block to enable caching for buildozer and gradle
       # - name: Cache .buildozer and .gradle
       #   uses: actions/cache@v4
       #   with:
@@ -17,15 +19,21 @@ jobs:
       #       .buildozer
       #       ~/.gradle
       #     key: ${{ runner.os }}-buildozer-${{ hashFiles('**/*.py') }}
+
+      - name: Check network connectivity
+        run: curl -I https://google.com
+
       - name: Build APK with Buildozer Action
         uses: ArtemSBulgakov/buildozer-action@v1
         with:
           command: buildozer android debug
+
       - name: Copy APK to artifact
         run: |
           mkdir -p dist_apk
           APK_PATH=$(find bin ./app/bin -name "*.apk" | head -n 1)
           if [ -n "$APK_PATH" ]; then cp "$APK_PATH" dist_apk/TTZAlarmAndroid.apk; fi
+
       - uses: actions/upload-artifact@v4
         with:
           name: android-apk

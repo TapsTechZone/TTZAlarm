@@ -64,6 +64,9 @@ jobs:
           pip install kivy ffpyplayer pyinstaller
       - name: Build with PyInstaller
         timeout-minutes: 10
+        env:
+          KIVY_GL_BACKEND: mock
+          KIVY_WINDOW: sdl2
         run: |
           pyinstaller --onefile main.py --name TTZAlarmWin.exe --add-data "alarm.flac;."
           mkdir dist_windows

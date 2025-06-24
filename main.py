@@ -1,3 +1,6 @@
+import os
+os.environ['KIVY_AUDIO'] = 'ffpyplayer'
+
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
@@ -39,11 +42,16 @@ class AlarmApp(App):
 
     #sets volume to max and plays alarm sound
     def play_generic_alarm(self):
-        from kivy.core.audio import SoundLoader
-        sound = SoundLoader.load('alarm.flac')
-        if sound:
-            sound.volume = 1.0
-            sound.play()
+        try:
+            from kivy.core.audio import SoundLoader
+            sound = SoundLoader.load('alarm.flac')
+            if sound:
+                sound.volume = 1.0
+                sound.play()
+            else:
+                print("Failed to load sound. Make sure ffpyplayer is installed and the file exists.")
+        except ImportError:
+            print("ffpyplayer is not installed. Please install it with 'pip install ffpyplayer'.")
 
 #actually load and run app
 if __name__ == '__main__':
